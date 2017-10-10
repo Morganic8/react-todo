@@ -1,6 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var TodoApp = require('TodoApp');
+
 
 //Destructuring ES6
 var {Route, Router, IndexRoute, hashHistory} = require('react-router');
@@ -15,7 +17,7 @@ ReactDOM.render(
   //Router expects one prop
   //{hashHistory}, {Main}, {Weather} are JSX expressions
   //{Weather} is index you must you IndexLink to remove auto 'active class' check Nav.jsx
-  <p>BoilerPlate 3 Project</p>,
+  <TodoApp/>,
   document.getElementById('app')
 
 );
