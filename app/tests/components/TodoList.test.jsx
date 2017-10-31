@@ -25,8 +25,10 @@ describe('TodoList', ()=> {
     ];
     var todoList = TestUtils.renderIntoDocument(<TodoList todos={todos}/>);
 
+    //Checks how many items in the components
     var todosComponents = TestUtils.scryRenderedComponentsWithType(todoList, Todo);
 
+    //checks how many components rendered against how many items in the array
     expect(todosComponents.length).toBe(todos.length);
   })
 });
