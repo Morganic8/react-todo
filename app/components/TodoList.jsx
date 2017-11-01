@@ -10,7 +10,7 @@ render: function(){
       return (
         //Spread Operator "{...todo}", spread out props, makes object accesible to Todo.jsx
         //Key lets you iterate over array of objects with special unique identifier aka "id"
-        <Todo key={todo.id} {...todo}/>
+        <Todo key={todo.id} {...todo} onToggle={this.props.onToggle}/>
       )
     })
   };
