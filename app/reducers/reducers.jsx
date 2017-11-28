@@ -3,7 +3,7 @@ var uuid = require('node-uuid');
 var moment = require('moment');
 
 
-export var searchTextReducers = ( state = '', action) => {
+export var searchTextReducer = ( state = '', action) => {
   switch(action.type) {
     case 'SET_SEARCH_TEXT':
       return action.searchText;
@@ -24,7 +24,7 @@ export var showCompletedReducer = (state = false, action) => {
 };
 
 
-export var todosReducers = (state = [], action) => {
+export var todosReducer = (state = [], action) => {
   switch (action.type) {
     case "ADD_TODO":
       return [
