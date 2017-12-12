@@ -1,14 +1,16 @@
 var React = require('react');
+var {connect} = require('react-redux');
+var actions = require('actions');
 
-var AddTodo = React.createClass({
+export var AddTodo = React.createClass({
   onTodoSubmit: function(e){
     e.preventDefault();
-
+    var {dispatch} = this.props;
     var strTodo = this.refs.TodoText.value;
 
     if( strTodo.length > 0){
       this.refs.TodoText.value = '';
-      this.props.onSetTodo(strTodo);
+      dispatch(actions.addTodo(strTodo));
     } else {
       this.refs.TodoText.focus();
     }
@@ -25,4 +27,5 @@ var AddTodo = React.createClass({
   }
 });
 
-module.exports = AddTodo;
+//gives you access to the store
+export default connect()(AddTodo);

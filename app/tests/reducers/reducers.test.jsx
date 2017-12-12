@@ -13,7 +13,7 @@ describe('Reducers', () => {
         searchText: 'dog'
       }
 
-      var res = reducers.searchTextReducers(df(''), df(action));
+      var res = reducers.searchTextReducer(df(''), df(action));
 
       expect(res).toEqual(action.searchText);
 
@@ -42,7 +42,7 @@ describe('Reducers', () => {
       }
 
 
-      var res = reducers.todosReducers(df([]), df(action));
+      var res = reducers.todosReducer(df([]), df(action));
 
 
       //check if item added to array
@@ -67,7 +67,7 @@ describe('Reducers', () => {
       };
 
 
-      var res = reducers.todosReducers(df(todos), df(action));
+      var res = reducers.todosReducer(df(todos), df(action));
 
       expect(res[0].completed).toEqual(false);
 

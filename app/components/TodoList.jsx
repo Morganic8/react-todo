@@ -1,7 +1,10 @@
 var React = require('react');
-var Todo = require('Todo');
+//allows access to the store and its children
+var {connect} = require('react-redux')
 
-var TodoList = React.createClass({
+import Todo from 'Todo'
+
+export var TodoList = React.createClass({
 render: function(){
   var {todos} = this.props;
   var renderTodos = () => {
@@ -15,7 +18,7 @@ render: function(){
       return (
         //Spread Operator "{...todo}", spread out props, makes object accesible to Todo.jsx
         //Key lets you iterate over array of objects with special unique identifier aka "id"
-        <Todo key={todo.id} {...todo} onToggle={this.props.onToggle}/>
+        <Todo key={todo.id} {...todo}/>
       )
     })
   };
@@ -27,4 +30,12 @@ render: function(){
 }
 });
 
-module.exports = TodoList;
+//Todolist can now request data that it would like to render itself
+//it now connects store to individual component
+export default connect(
+  (state) => {
+    return {
+      todos: state.todos
+    };
+  }
+)(TodoList);

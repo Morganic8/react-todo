@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-
+var {Provider} = require('react-redux');
 var TodoApp = require('TodoApp');
 
 
@@ -29,7 +29,9 @@ ReactDOM.render(
   //Router expects one prop
   //{hashHistory}, {Main}, {Weather} are JSX expressions
   //{Weather} is index you must you IndexLink to remove auto 'active class' check Nav.jsx
-  <TodoApp/>,
+  <Provider store={store}>
+    <TodoApp/>
+  </Provider>,
   document.getElementById('app')
 
 );

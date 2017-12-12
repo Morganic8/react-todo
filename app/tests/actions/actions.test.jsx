@@ -31,7 +31,7 @@ describe('Actions', () => {
 
     };
 
-    var res = actions.showCompleted();
+    var res = actions.toggleShowCompleted();
 
     expect(res).toEqual(action)
   });
