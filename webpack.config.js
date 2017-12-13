@@ -28,6 +28,7 @@ module.exports = {
       './app/api'
     ],
     alias: {
+      app: 'app',
         //Name Modules
         applicationStyles: 'app/styles/app.scss',
         actions: 'app/actions/actions.jsx',

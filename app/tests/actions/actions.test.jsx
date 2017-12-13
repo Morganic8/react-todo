@@ -1,6 +1,17 @@
 var expect = require('expect');
 
 var actions = require('actions');
+
+
+//ES6 importing is like require
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+
+//create a mock store
+//Create a mock store per each test
+//add array of middleware
+var createMockStore = configureMockStore([thunk]);
+
 describe('Actions', () => {
   it('should generate search text action', () => {
       var action = {
@@ -16,12 +27,40 @@ describe('Actions', () => {
   it('should generate add todo action', () => {
       var action = {
         type: 'ADD_TODO',
-        text: 'thing to do'
-      }
+        todo: {
+          id: 'abc123',
+          text: 'anything we like',
+          completed: false,
+          createdAt: 0
+        }
+      };
 
-      var res = actions.addTodo(action.text);
+      var res = actions.addTodo(action.todo);
 
       expect(res).toEqual(action);
+  });
+
+
+  it('should create todo and dispatch ADD_TODO', (done) => {
+    //create mock store
+    const store = createMockStore({});
+    const todoText = 'My todo item';
+
+
+    store.dispatch(actions.startAddTodo(todoText)).then( () => {
+      //get all actions that were fired
+      const actions = store.getActions();
+
+      expect(actions[0]).toInclude({
+        type: 'ADD_TODO'
+      });
+      expect(actions[0].todo).toInclude({
+        text: todoText
+      });
+      //Make karma wait till done is called
+      done();
+    }).catch(done);
+
   });
 
   it('should generate addTodos actions object', ()=> {

@@ -11,6 +11,11 @@ var actions = require('actions');
 var store = require('configureStore').configure();
 var TodoAPI = require('TodoAPI');
 
+//Import the playground Firebase code, we are not exporting any code thus we don't require anything
+//We are using the path instead, which essentially calls the js file like a function ()
+
+//test out firebase below
+//import './../playground/firebase/index.js';
 
 store.subscribe(() => {
   var state = store.getState()
