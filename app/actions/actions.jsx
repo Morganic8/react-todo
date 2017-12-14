@@ -43,7 +43,7 @@ export var startAddTodo = (text) => {
                 id: todoRef.key
               }));
           }, (e)=> {
-
+                console.log('Error in dispatching add to do', e);
           });
 
     }
@@ -58,9 +58,30 @@ export var toggleShowCompleted = () => {
 };
 //toggle todo
 
-export var toggleTodo = (id) => {
+export var updateTodo = (id, updates) => {
   return {
-    type: 'TOGGLE_TODO',
-    id
+    type: 'UPDATE_TODO',
+    id,
+    updates
   }
 };
+
+
+export var startToggleTodo = (id, completed) => {
+  //async action, dispatch utilizing thunk so it can return a function
+  return (dispatch, getState) => {
+    //ES6 template strings ticks to the left, and inject
+    var todoRef = firebaseRef.child(`todos/${id}`);
+    var updates = {
+      completed,
+      completedAt: completed ? moment().unix() : null
+    };
+
+    //chain on for testing
+    //updates firebase
+    return todoRef.update(updates).then(() => {
+      //updates the store and rerenders what the user sees
+      dispatch(updateTodo(id, updates));
+    });
+  }
+}

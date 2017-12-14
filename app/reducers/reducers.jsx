@@ -32,16 +32,14 @@ export var todosReducer = (state = [], action) => {
         action.todo
       ];
       //add case for TOggle_todo match id, modify !completed update completedAt
-      case "TOGGLE_TODO":
+      case "UPDATE_TODO":
         return state.map( (todo) => {
           if(todo.id === action.id) {
-            var nextCompleted = !todo.completed;
-
             return {
               ...todo,
-              completed: nextCompleted,
-              completedAt: nextCompleted ? moment().unix() : undefined
-            }
+              //multiple spread operators will override the previous ones, that's why update will work fine
+              ...action.updates
+            };
           } else {
             return todo;
           }
