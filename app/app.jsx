@@ -17,16 +17,11 @@ var TodoAPI = require('TodoAPI');
 //test out firebase below
 //import './../playground/firebase/index.js';
 
-store.subscribe(() => {
-  var state = store.getState()
-  console.log('New state', state);
 
-  TodoAPI.setTodos(state.todos);
-});
 
-var initialTodos = TodoAPI.getTodos();
 
-store.dispatch(actions.addTodos(initialTodos));
+//Async action that fetches data from firebase and updates the app
+store.dispatch(actions.startAddTodos());
 
 //Load Foundation
 $(document).foundation();

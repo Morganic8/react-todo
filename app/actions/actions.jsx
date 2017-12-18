@@ -23,6 +23,37 @@ export var addTodos = (todos) => {
   }
 };
 
+//how the data comes back from fb and how it should be stored in redux
+//firebase returns objects, our app needs arrays
+export var startAddTodos = () => {
+  return (dispatch, getState) => {
+    var todosRef = firebaseRef.child('todos');
+
+    //Fetch the data from firebase
+    todosRef.once('value').then( (snapshot) => {
+      //get the data
+      var todos = snapshot.val() || {};
+
+      //parse firebase object data into an array for redux to read
+      var parseTodos = [];
+
+      //convert todos to make parseTodos work with redux
+      //just grab the id's for each ID in firebase
+      Object.keys(todos).forEach( (todoId) => {
+        //push the data from firebase to redux item parseTodos
+          parseTodos.push({
+            id: todoId,
+            ...todos[todoId]
+          });
+      });
+
+      // update the redux store
+      dispatch(addTodos(parseTodos));
+
+    });
+  }
+};
+
 //communicate with Firebase async code
 export var startAddTodo = (text) => {
   return (dispatch, getState) => {
