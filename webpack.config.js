@@ -1,6 +1,11 @@
 var webpack = require('webpack');
 var path = require('path');
 
+
+//Specify which enviroment we want
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+
 module.exports = {
   entry: [
     'script!jquery/dist/jquery.min.js',
@@ -14,6 +19,12 @@ module.exports = {
     new webpack.ProvidePlugin({
       '$': 'jquery',
       'jQuery': 'jquery'
+    }),
+    //optimize webpack to remove warnings
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        warnings: false
+      }
     })
   ],
   output: {
@@ -56,6 +67,6 @@ module.exports = {
       path.resolve(__dirname, './node_modules/foundation-sites/scss')
     ]
   },
-  //removes unnescessary code from bundle.js and allows the file only to be search that has 'debugger'
-  devtool: 'eval-source-map'
+  //removes unnescessary code from bundle.js for production and allows the file only to be search that has 'debugger'
+  devtool: process.env.NODE_ENV === 'production' ? undefined: 'cheap-module-eval-source-map'
 };

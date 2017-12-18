@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "karma start",
-    "start": "node server.js"
+    /*Only test env*/
+    "test": "NODE_ENV=test karma start",
+    "build": "webpack",
+    /*This will run webpack with server js file with 'build' var above*/
+    "start": "npm run build && node server.js"
   },
   "author": "Morgan Atwood",
   "license": "Morganic",
@@ -14,9 +17,7 @@
     "firebase": "^3.0.2",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
-    "react-router": "^2.0.0"
-  },
-  "devDependencies": {
+    "react-router": "^2.0.0",
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.2",
     "babel-preset-es2015": "^6.5.0",
@@ -27,13 +28,6 @@
     "expect": "^1.20.2",
     "foundation-sites": "6.2.0",
     "jquery": "^2.2.1",
-    "karma": "^0.13.22",
-    "karma-chrome-launcher": "^0.2.2",
-    "karma-mocha": "^0.2.2",
-    "karma-mocha-reporter": "^2.0.0",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^1.7.0",
-    "mocha": "^2.4.5",
     "moment": "^2.19.1",
     "node-sass": "^3.13.1",
     "node-uuid": "^1.4.8",
@@ -46,5 +40,15 @@
     "script-loader": "^0.6.1",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.13"
+  },
+  "devDependencies": {
+
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-mocha": "^0.2.2",
+    "karma-mocha-reporter": "^2.0.0",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^1.7.0",
+    "mocha": "^2.4.5"
   }
 }
