@@ -3,10 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    /*Only test env*/
     "test": "NODE_ENV=test karma start",
     "build": "webpack",
-    /*This will run webpack with server js file with 'build' var above*/
     "start": "npm run build && node server.js"
   },
   "author": "Morgan Atwood",
