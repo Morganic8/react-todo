@@ -3,12 +3,12 @@ import firebase from 'firebase'
 
 // Initialize Firebase
   var config = {
-    apiKey: "AIzaSyAffiwNHcfDPBbtyavJuFIhQXHx0gxY6r0",
-    authDomain: "atwood-todo-app.firebaseapp.com",
-    databaseURL: "https://atwood-todo-app.firebaseio.com",
-    projectId: "atwood-todo-app",
-    storageBucket: "atwood-todo-app.appspot.com",
-    messagingSenderId: "529359489961"
+    apiKey: process.env.API_KEY,
+    authDomain: process.env.AUTH_DOMAIN,
+    databaseURL: process.env.DATABASE_URL,
+    storageBucket: process.env.STORAGE_BUCKET,
+    messagingSenderId: process.env.MESSAGING_SENDER_ID
+
   };
   //call method
   firebase.initializeApp(config);
