@@ -17,6 +17,10 @@ try {
 
 }
 
+//GITHUB Provider
+export var githubProvider = new firebase.auth.GithubAuthProvider();
+
+
 //This communicates to the firebase db object on what to change or set as defaults
 export var firebaseRef = firebase.database().ref();
 

@@ -7,7 +7,7 @@ var {Provider} = require('react-redux');
 var TodoApp = require('TodoApp');
 
 var configureStore = require('configureStore');
-var TodoApp = require('TodoApp');
+import {TodoApp} from 'TodoApp';
 import TodoList from 'TodoList';
 //var TodoList = require('TodoList');
 
