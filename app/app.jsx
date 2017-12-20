@@ -1,19 +1,23 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var {Provider} = require('react-redux');
-
-
-
 //Destructuring ES6
-var {Route, Router, IndexRoute, hashHistory} = require('react-router');
+var {hashHistory} = require('react-router');
 
 var actions = require('actions');
 var store = require('configureStore').configure();
-var TodoAPI = require('TodoAPI');
+import firebase from 'app/firebase/';
+import router from 'app/router/';
 
-import TodoApp from 'TodoApp';
-import Login from 'Login';
-
+//takes a function as an arg
+//if user exist they are authenticated
+firebase.auth().onAuthStateChanged( (user)=> {
+  if(user) {
+    hashHistory.push('/todos');
+  } else {
+    hashHistory.push('/');
+  };
+});
 
 //Import the playground Firebase code, we are not exporting any code thus we don't require anything
 //We are using the path instead, which essentially calls the js file like a function ()
@@ -30,17 +34,14 @@ $(document).foundation();
 //app css
 require('style!css!sass!applicationStyles')
 
+
+
+
 ReactDOM.render(
   //Router expects one prop
-  //{hashHistory}, {Main}, {Weather} are JSX expressions
-  //{Weather} is index you must you IndexLink to remove auto 'active class' check Nav.jsx
   <Provider store={store}>
-      <Router history={hashHistory}>
-         <Route path="/">
-             <Route path="todos" component={TodoApp}/>
-             <IndexRoute component={Login} />
-         </Route>
-     </Router>
+    {/* bring in all of the routes  */}
+    {router}
   </Provider>,
   document.getElementById('app')
 
