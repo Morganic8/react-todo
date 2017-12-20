@@ -55,3 +55,22 @@ export var todosReducer = (state = [], action) => {
 
   }
 };
+
+//YOU NEED TO UPDATE THE STORE WHEN YOU ADD NEW REDUCERS
+export var authReducer = (state = {}, action) => {
+
+    switch(action.type) {
+      case 'LOGIN':
+        return {
+        uid: action.uid
+      }
+        console.log('Login success?', action.type)
+      case 'LOGOUT':
+        return {};
+        console.log('Logout success', action.type)
+      default:
+        return state;
+
+
+    }
+}
