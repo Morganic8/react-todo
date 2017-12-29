@@ -42,28 +42,6 @@ describe('Actions', () => {
   });
 
 
-  it('should create todo and dispatch ADD_TODO', (done) => {
-    //create mock store
-    const store = createMockStore({});
-    const todoText = 'My todo item';
-
-
-    store.dispatch(actions.startAddTodo(todoText)).then( () => {
-      //get all actions that were fired
-      const actions = store.getActions();
-
-      expect(actions[0]).toInclude({
-        type: 'ADD_TODO'
-      });
-      expect(actions[0].todo).toInclude({
-        text: todoText
-      });
-      //Make karma wait till done is called
-      done();
-    }).catch(done);
-
-  });
-
   it('should generate addTodos actions object', ()=> {
     var todos = [{
       id: '111',
@@ -131,40 +109,53 @@ describe('Actions', () => {
 
      expect(res).toEqual(action);
 
-     
+
   });
 
 
   describe('Tests with Firebase Todos', () => {
     var testTodoRef;
+    //store user id
+    var uid;
+    //store user todos
+    var todosRef;
 
     //Mocha code that can run this code before each test
     beforeEach( (done)=> {
 
-      var todosRef = firebaseRef.child('todos');
+      //sign in anon for firebase
+      firebase.auth().signInAnonymously().then((user)=> {
+        //get user id
+        uid = user.id;
+        //get user todos
+        todosRef = firebaseRef.child(`users/${uid}/todos`);
 
-      todosRef.remove().then( ()=> {
-        //generate todo ref from firebase
-          testTodoRef = firebaseRef.child('todos').push();
+        return todosRef.remove();
+        //once todos are removed from the user, then return the new set of data
+      }).then( ()=> {
 
-          testTodoRef.set({
+        //make a new todo item
+          testTodoRef = todosRef.push();
+
+          //return new todo data
+          return testTodoRef.set({
             text: 'Somthing to do',
             completed: false,
             completedAt: 873479
             //single line response does not need curly braces
-          })
+          });
       })
       .then( ()=> done())
-      .catch(done)
-    });
+      .catch(done);
+});
 
     //Mocha code that can run this code after each test
     afterEach( (done) => {
-      testTodoRef.remove().then( ()=> done());
+      todosRef.remove().then( ()=> done());
     });
 
     it('should toggle todo and dispatch UPDATE_TODO action', (done) => {
-      const store = createMockStore({});
+      const store = createMockStore({auth: {uid}});
 
       const action = actions.startToggleTodo(testTodoRef.key, true);
 
@@ -188,7 +179,7 @@ describe('Actions', () => {
 
     it('should verify dispatch actions for addTodos', (done) => {
       //Create a new store to test data not real data
-      const store = createMockStore({});
+      const store = createMockStore({auth: {uid}});
 
       //grab the action you want to test
       const action = actions.addTodos();
@@ -206,6 +197,28 @@ describe('Actions', () => {
           text: 'Somthing to do'
         });
       }, done())
+    });
+
+    it('should create todo and dispatch ADD_TODO', (done) => {
+      //create mock store
+      const store = createMockStore({auth: {uid}});
+      const todoText = 'My todo item';
+
+
+      store.dispatch(actions.startAddTodo(todoText)).then( () => {
+        //get all actions that were fired
+        const actions = store.getActions();
+
+        expect(actions[0]).toInclude({
+          type: 'ADD_TODO'
+        });
+        expect(actions[0].todo).toInclude({
+          text: todoText
+        });
+        //Make karma wait till done is called
+        done();
+      }).catch(done);
+
     });
   });
 });
