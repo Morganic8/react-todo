@@ -14,6 +14,9 @@ import router from 'app/router/';
 firebase.auth().onAuthStateChanged( (user)=> {
   if(user) {
     store.dispatch(actions.login(user.uid));
+    //Async action that fetches data from firebase and updates the app
+    //just grab the users todos, not everyone elses
+    store.dispatch(actions.startAddTodos());
     hashHistory.push('/todos');
   } else {
     store.dispatch(actions.logout());
@@ -27,8 +30,7 @@ firebase.auth().onAuthStateChanged( (user)=> {
 //test out firebase below
 //import './../playground/firebase/index.js';
 
-//Async action that fetches data from firebase and updates the app
-store.dispatch(actions.startAddTodos());
+
 
 //Load Foundation
 $(document).foundation();

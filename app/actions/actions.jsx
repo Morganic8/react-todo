@@ -27,7 +27,8 @@ export var addTodos = (todos) => {
 //firebase returns objects, our app needs arrays
 export var startAddTodos = () => {
   return (dispatch, getState) => {
-    var todosRef = firebaseRef.child('todos');
+    var uid = getState().auth.uid;
+    var todosRef = firebaseRef.child(`users/${uid}/todos`);
 
     //Fetch the data from firebase
     todosRef.once('value').then( (snapshot) => {
@@ -64,8 +65,11 @@ export var startAddTodo = (text) => {
             completedAt: null
 
           };
+
+          //get uid from firebase, getState is the redux function that will deliver the FB auth.uid
+          var uid = getState().auth.uid;
           //make ref to firebase todo
-          var todoRef = firebaseRef.child('todos').push(todo)
+          var todoRef = firebaseRef.child(`users/${uid}/todos`).push(todo)
 
           //update firebase and the promise will dispatch the action to add to the view
           return todoRef.then( ()=> {
@@ -101,8 +105,9 @@ export var updateTodo = (id, updates) => {
 export var startToggleTodo = (id, completed) => {
   //async action, dispatch utilizing thunk so it can return a function
   return (dispatch, getState) => {
+    var uid = getState().auth.uid;
     //ES6 template strings ticks to the left, and inject
-    var todoRef = firebaseRef.child(`todos/${id}`);
+    var todoRef = firebaseRef.child(`users/${uid}/todos/${id}`);
     var updates = {
       completed,
       completedAt: completed ? moment().unix() : null
